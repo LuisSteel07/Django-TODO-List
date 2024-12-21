@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1>Listas de Tareas</h1>
+
+                <ul class="list-group">
+                    {% for tarea in tareas %}
+                        <li class="list-group-item bg-light">
+                            <a href="{% url 'tasks_edit' tarea.id %}" class="text-decoration-none">
+                                <header class="d-flex justify-content-between">
+                                    <h3>{{tarea.titulo}}</h3>
+                                    <p class="d-flex rounded-4 bg-primary border-1 text-white fw-bold text-center p-2">
+                                        {{tarea.categoria}}
+                                    </p>
+                                </header>
+                                {% if tarea.importante %}
+                                    <p class="text-bg-primary btn">Tarea Importante</p>
+                                {% endif %}
+                                <p>{{tarea.descripcion}}</p>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
+
+

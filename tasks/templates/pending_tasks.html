@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1>Tareas Pendientes</h1>
+            <b class="text-danger">{{error}}</b>
+            <ul class="list-group">
+                {% for tarea in tareas %}
+                    <li class="list-group-item">
+                        <a href="{% url 'tasks_edit' tarea.id %}" class="text-decoration-none">
+                            <header class="d-flex justify-content-between">
+                                <h3>{{tarea.titulo}}</h3>
+                                <p class="rounded-4 bg-primary border-1 text-white fw-bold text-center p-2">
+                                    {{tarea.categoria}}
+                                </p>
+                            </header>
+                            <h1></h1>
+                            <p>{{tarea.descripcion}}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

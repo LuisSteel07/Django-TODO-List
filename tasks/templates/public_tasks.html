@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<main class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1>Tareas de otros usuarios</h1>
+
+                <ul class="list-group">
+                    {% for tarea in tareas_anonimas %}
+                        <li class="list-group-item">
+                            <div class="text-black">
+                                <header class="d-flex justify-content-between">
+                                    <h3>{{tarea.titulo}}</h3>
+                                    <p class="d-flex rounded-4 bg-primary border-1 text-white fw-bold text-center p-2">
+                                        {{tarea.categoria}}
+                                    </p>
+                                </header>
+                                <h4>Creador: {{tarea.usuario.username}}</h4>
+                                <p>{{tarea.descripcion}}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
