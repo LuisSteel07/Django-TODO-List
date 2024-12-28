@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from django.utils import timezone
@@ -55,7 +55,7 @@ def signin(request):
 
 @login_required
 def tasks(request):
-    tareas = Tarea.objects.filter(usuario=request.user)
+    tareas = Tarea.objects.filter(usuario=request.user).order_by('fecha_limite')
     return render(request, 'tasks.html', {
         'tareas': tareas
     })
@@ -146,7 +146,13 @@ def task_delete(request, task_id):
         return redirect('tasks')
 
 def public_tasks(request):
-        tareas_anonimas = Tarea.objects.filter(public=True).exclude(usuario=request.user)
-        return render(request, 'public_tasks.html', {
-            'tareas_anonimas': tareas_anonimas
-        })
+    tareas = Tarea.objects.all()
+
+    if request.user.is_authenticated:
+        tareas = tareas.filter(public=True).exclude(usuario=request.user)
+    else:
+        tareas = tareas.filter(public=True)
+
+    return render(request, 'public_tasks.html', {
+        'tareas_anonimas': tareas
+    })
